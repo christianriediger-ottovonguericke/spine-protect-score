@@ -14,6 +14,28 @@ except Exception:
     REPORTLAB_AVAILABLE = False
 
 st.set_page_config(page_title="Spine-PROTECT Score", page_icon="🧠", layout="wide")
+# ------------------------------------------------------------
+# Password protection
+# ------------------------------------------------------------
+
+def check_password():
+
+    password = st.text_input(
+        "Passwort",
+        type="password"
+    )
+
+    if password == st.secrets.get("APP_PASSWORD", ""):
+        return True
+
+    if password:
+        st.error("Falsches Passwort.")
+
+    return False
+
+
+if not check_password():
+    st.stop()
 
 def risk_class(score: int):
     if score <= 4:
